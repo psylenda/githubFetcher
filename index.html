@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="userName" /> 
+    <button onclick="fetchUser()"> Pull </button>
+
+    <div id="output">
+        <img id="image" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" />
+        <div id="followers"></div>
+        <table>
+            <tr>
+                login name
+            </tr>
+            <tr>
+                picture
+            </tr>
+            <tr>
+                link to profile
+            </tr>
+        </table>
+        <!-- <table>
+            <tr><td>userid</td><td>Image</td><td>URL</td></tr>
+        </table> -->
+        <!-- Build a table from java script  -->
+    </div>
+
+    <script type="text/javascript">
+
+        function fetchUser(){
+            let user = document.getElementById('userName').value;
+            if(!user){
+                alert(`User is blank or undefined !`);
+            }
+            else{
+
+                // syntax ==> promise in java script ?
+                // what it does     
+                fetch(`https://api.github.com/users/${user}`)
+                .then(response=>response.json())
+                .then(json=>{
+                    document.getElementById('followers').innerHTML=`<span>followers : ${json.followers}</span>`  
+                    document.getElementById('image').removeAttribute("src")
+                    document.getElementById('image').setAttribute("src",json.avatar_url)
+                    fetch(`https://api.github.com/users/${user}/followers`)
+                    .then(response=>response.json())
+                    .then(json=>{
+                        // we will build the table !
+                    })
+                    .catch(err=> console.log(err))
+                    console.log(json)
+                })
+                .catch(err=> console.log(err))
+            }
+            
+        }
+    </script>
+
+</body>
+</html>
+
+
+    </body>
+
